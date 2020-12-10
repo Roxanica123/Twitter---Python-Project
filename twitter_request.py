@@ -1,6 +1,6 @@
 import requests
 
-from tweeter_credentials import bearer_token_v2
+from twitter_credentials import bearer_token_v2
 
 QUERY = "query="
 TWEET_FIELDS = "tweet.fields="
