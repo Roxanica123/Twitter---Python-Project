@@ -11,7 +11,6 @@ class TwitterRequest:
     def __init__(self, hashtag, max_results=10):
         self.hashtag = hashtag
         self.max_results = max_results
-        self.url = self.build_url()
         self.headers = self.build_headers()
 
     def build_url(self, next_token=None):
@@ -24,8 +23,8 @@ class TwitterRequest:
             url = url + "&{}".format(NEXT_TOKEN + next_token)
         return url
 
-    def send_request(self):
-        response = requests.request("GET", self.url, headers=self.headers)
+    def send_request(self, next_token=None):
+        response = requests.request("GET", self.build_url(next_token), headers=self.headers)
         if response.status_code != 200:
             raise Exception(response.status_code, response.text)
         return response.json()
