@@ -37,7 +37,7 @@ def extract_coordinates_from_tweets_info(tweets, places):
     tweets_with_extracted_location = []
     for tweet in tweets:
         if tweet["geo"].get("coordinates") is not None:
-            coordinates = tweet["coordinates"]
+            coordinates = tweet["geo"]["coordinates"]["coordinates"]
         else:
             place = find_tweet_place_in_places_list(tweet, places)
             coordinates = calculate_coordinates(place)
