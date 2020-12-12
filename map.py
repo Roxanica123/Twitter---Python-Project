@@ -24,3 +24,6 @@ class Map:
 
     def save_map(self, save_location):
         self.map.save(save_location)
+
+    def get_html_string_representation(self):
+        return self.map.get_root().render()
