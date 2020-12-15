@@ -1,4 +1,5 @@
 import random
+import geopy.distance
 
 import folium
 
@@ -8,8 +9,19 @@ class Map:
         self.color_theme = ['#00FFFF', '#00EFFF', '#00DEFF', '#00CBFF', '#00B8FF', '#00A3FF', '#008CFF']
         self.tweets_data = tweets_data
         self.centre_location = self.get_center_location()
-        self.map = folium.Map(location=self.centre_location, tiles='Stamen Toner', zoom_start=2)
+        self.zoom = self.calculate_zoom()
+        print(self.zoom)
+        self.map = folium.Map(location=self.centre_location, tiles='Stamen Toner', zoom_start=self.zoom)
         self.add_circles()
+
+    def calculate_zoom(self):
+        distances = [geopy.distance.geodesic(self.centre_location, tweet["coordinates"][::-1]).km for tweet in
+                     self.tweets_data]
+        print(distances)
+        a = 9 / 20000
+        distances = [9 - a * distance for distance in distances]
+        print(distances)
+        return min(distances)
 
     def get_center_location(self):
         latitude = 0
