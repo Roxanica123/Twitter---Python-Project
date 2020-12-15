@@ -16,10 +16,13 @@ def get_recent_tweets_with_available_location(hashtag, wanted_results):
         for tweet in data:
             if tweet.get("geo") is not None and len(tweets_with_available_location) < wanted_results:
                 tweets_with_available_location.append(tweet)
-        next_token = meta["next_token"]
         number_of_requests += 1
         if response.get("includes") is not None and response["includes"].get("places") is not None:
             places = places + response["includes"]["places"]
+        if meta.get("next_token") is not None:
+            next_token = meta["next_token"]
+        else:
+            break
     return extract_coordinates_from_tweets_info(tweets_with_available_location, places)
 
 
