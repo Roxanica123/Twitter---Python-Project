@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h1>Hashtag</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.hashtag.label }}<br>
+            {{ form.hashtag(size=32) }}
+        </p>
+        <p>
+            {{ form.wanted_results.label }}<br>
+            {{ form.wanted_results(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
