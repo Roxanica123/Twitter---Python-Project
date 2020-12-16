@@ -11,13 +11,13 @@ MAX_RESULTS = "max_results="
 
 
 class TwitterRequest:
-    def __init__(self, hashtag, max_results=100):
+    def __init__(self, hashtag=None, max_results=100):
         self.hashtag = hashtag
         self.max_results = max_results
         self.headers_v2 = self.build_headers()
 
     def build_url(self, next_token=None):
-        query = QUERY + self.hashtag
+        query = QUERY + (self.hashtag if self.hashtag is not None else 'hello')
         tweet_fields = TWEET_FIELDS + "geo"
         expansions = EXPANSIONS + "geo.place_id"
         place_fields = PLACE_FIELDS + "geo,contained_within"
