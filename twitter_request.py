@@ -7,22 +7,23 @@ TWEET_FIELDS = "tweet.fields="
 NEXT_TOKEN = "next_token="
 EXPANSIONS = "expansions="
 PLACE_FIELDS = "place.fields="
+MAX_RESULTS = "max_results="
 
 
 class TwitterRequest:
-    def __init__(self, hashtag, max_results=10):
+    def __init__(self, hashtag=None, max_results=100):
         self.hashtag = hashtag
         self.max_results = max_results
         self.headers_v2 = self.build_headers()
 
     def build_url(self, next_token=None):
-        query = QUERY + self.hashtag
+        query = QUERY + (self.hashtag if self.hashtag is not None else 'hello')
         tweet_fields = TWEET_FIELDS + "geo"
         expansions = EXPANSIONS + "geo.place_id"
         place_fields = PLACE_FIELDS + "geo,contained_within"
-
-        url = "https://api.twitter.com/2/tweets/search/recent?{}&{}&{}&{}".format(
-            query, tweet_fields, expansions, place_fields
+        max_results = MAX_RESULTS + str(self.max_results)
+        url = "https://api.twitter.com/2/tweets/search/recent?{}&{}&{}&{}&{}".format(
+            query, tweet_fields, expansions, place_fields, max_results
         )
         if next_token is not None:
             url = url + "&{}".format(NEXT_TOKEN + next_token)
