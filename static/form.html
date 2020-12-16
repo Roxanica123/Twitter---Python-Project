@@ -1,0 +1,25 @@
+<form-container>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <hashtag-container>
+            <hashtag-label>
+                {{ form.hashtag.label }}
+            </hashtag-label>
+            <hashtag-field>
+                {{ form.hashtag(size=32) }}
+            </hashtag-field>
+        </hashtag-container>
+
+        <wanted_results-container>
+            <wanted-results-label>
+                {{ form.hashtag.label }}
+            </wanted-results-label>
+            <wanted-results-container>
+                {{ form.hashtag(size=32) }}
+            </wanted-results-container>
+        </wanted_results-container>
+        <submit>
+            {{ form.submit() }}
+        </submit>
+    </form>
+</form-container>
