@@ -61,3 +61,7 @@ submit input:hover {
     text-decoration: none;
     overflow: hidden;
 }
+
+.leaflet-popup-content-wrapper {
+    background-color: black !important;
+}

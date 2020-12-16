@@ -35,7 +35,7 @@ class Map:
             embed_json = twitter_embed_request(tweet["id"])
             html = embed_json["html"]
 
-            iframe = folium.IFrame(html=html, width=500, height=300)
+            iframe = folium.IFrame(html=html, width=500, height=400)
             popup = folium.Popup(iframe, max_width=2650)
 
             color = random.choice(self.color_theme)
