@@ -12,7 +12,7 @@ MAX_RESULTS = "max_results="
 
 def twitter_embed_request(tweet_id):
     tweet_url = "https://twitter.com/random/status/" + str(tweet_id)
-    url = "https://publish.twitter.com/oembed?url=" + tweet_url
+    url = "https://publish.twitter.com/oembed?theme=dark&url=" + tweet_url
     response = requests.request("GET", url)
     return response.json()
 
