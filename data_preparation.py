@@ -3,7 +3,7 @@ from twitter_request import TwitterRequest
 MAX_REQUESTS = 100
 
 
-def get_recent_tweets_with_available_location(hashtag, wanted_results):
+def get_recent_tweets_with_available_location(hashtag=None, wanted_results=10):
     twitter = TwitterRequest(hashtag, wanted_results * 10 if wanted_results * 10 < 100 else 100)
     tweets_with_available_location = []
     places = []

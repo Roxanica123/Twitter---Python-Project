@@ -1,0 +1,63 @@
+div {
+    z-index: 1;
+}
+
+wanted-results-field input,
+hashtag-field input {
+    width: 100%;
+}
+
+wanted-results-label label,
+hashtag-label label {
+    color: rgb(255, 255, 255);
+}
+
+form-container {
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+    background-color: #000000;
+    border-radius: 3px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+}
+
+hashtag-container {
+    display: flex;
+    flex-direction: column;
+}
+
+wanted_results-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+submit input {
+    padding: 10px 20px;
+    border-radius: 0;
+    overflow: hidden;
+    width: 100%;
+    margin: 20px 10px 1px 10px;
+    background-color: #000000;
+    border: none;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+submit input:hover {
+    border: solid white 1px;
+    margin: 19px 10px 0px 10px;
+    text-decoration: none;
+    overflow: hidden;
+}
