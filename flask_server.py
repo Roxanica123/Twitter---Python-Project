@@ -1,4 +1,4 @@
-from flask import Flask, abort, redirect
+from flask import Flask, redirect
 from flask import request, render_template_string
 
 from data_preparation import get_recent_tweets_with_available_location

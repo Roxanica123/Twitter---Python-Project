@@ -11,7 +11,7 @@ class HashtagForm(FlaskForm):
 
 
 def add_form_to_map(map_string_representation):
-    soup = bs4.BeautifulSoup(map_string_representation)
+    soup = bs4.BeautifulSoup(map_string_representation, features="html.parser")
 
     form_container = soup.new_tag("form-container")
     form_tag = soup.new_tag("form", action="", method="post")
@@ -40,5 +40,8 @@ def add_form_to_map(map_string_representation):
     form_tag.append(wanted_results_tag)
     form_tag.append(submit_tag)
     form_container.append(form_tag)
+
+    link_tag = soup.new_tag("link", rel="stylesheet", href="/static/form.css")
+    soup.head.append(link_tag)
     soup.body.append(form_container)
     return str(soup)
