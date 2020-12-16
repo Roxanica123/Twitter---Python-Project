@@ -1,4 +1,5 @@
 from twitter_request import TwitterRequest
+from user_input import escape_hashtag_sign
 
 MAX_REQUESTS = 100
 
@@ -23,6 +24,8 @@ def get_recent_tweets_with_available_location(hashtag=None, wanted_results=10):
             next_token = meta["next_token"]
         else:
             break
+    if len(tweets_with_available_location) == 0:
+        return get_recent_tweets_with_available_location(escape_hashtag_sign('#oops'))
     return extract_coordinates_from_tweets_info(tweets_with_available_location, places)
 
 
@@ -44,6 +47,6 @@ def extract_coordinates_from_tweets_info(tweets, places):
         else:
             place = find_tweet_place_in_places_list(tweet, places)
             coordinates = calculate_coordinates(place)
-        tweet_with_extracted_location = {"text": tweet["text"], "coordinates": coordinates}
+        tweet_with_extracted_location = {"id": tweet["id"], "text": tweet["text"], "coordinates": coordinates}
         tweets_with_extracted_location.append(tweet_with_extracted_location)
     return tweets_with_extracted_location

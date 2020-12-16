@@ -3,6 +3,8 @@ import geopy.distance
 
 import folium
 
+from twitter_request import twitter_embed_request
+
 
 class Map:
     def __init__(self, tweets_data):
@@ -30,7 +32,12 @@ class Map:
 
     def add_circles(self):
         for tweet in self.tweets_data:
-            popup = tweet["text"]
+            embed_json = twitter_embed_request(tweet["id"])
+            html = embed_json["html"]
+
+            iframe = folium.IFrame(html=html, width=500, height=400)
+            popup = folium.Popup(iframe, max_width=2650)
+
             color = random.choice(self.color_theme)
             folium.CircleMarker(radius=50, location=tweet["coordinates"][::-1], popup=popup, color=color,
                                 fill=True, fill_color=color).add_to(self.map)

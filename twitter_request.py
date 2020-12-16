@@ -10,6 +10,13 @@ PLACE_FIELDS = "place.fields="
 MAX_RESULTS = "max_results="
 
 
+def twitter_embed_request(tweet_id):
+    tweet_url = "https://twitter.com/random/status/" + str(tweet_id)
+    url = "https://publish.twitter.com/oembed?theme=dark&url=" + tweet_url
+    response = requests.request("GET", url)
+    return response.json()
+
+
 class TwitterRequest:
     def __init__(self, hashtag=None, max_results=100):
         self.hashtag = hashtag
