@@ -44,6 +44,6 @@ def extract_coordinates_from_tweets_info(tweets, places):
         else:
             place = find_tweet_place_in_places_list(tweet, places)
             coordinates = calculate_coordinates(place)
-        tweet_with_extracted_location = {"text": tweet["text"], "coordinates": coordinates}
+        tweet_with_extracted_location = {"id": tweet["id"], "text": tweet["text"], "coordinates": coordinates}
         tweets_with_extracted_location.append(tweet_with_extracted_location)
     return tweets_with_extracted_location
