@@ -1,7 +1,10 @@
-from twitter_request import TwitterRequest
+from twitter_request import TwitterRequest, get_tweet_by_id
 from user_input import escape_hashtag_sign
 
 MAX_REQUESTS = 100
+HELLO_TWEET_ID = "1342530746838372355"
+NO_RESULTS_TWEET_ID = "1342523611614236672"
+WRONG_INPUTS_TWEET_ID = "1342542645558706181"
 
 
 def get_recent_tweets_with_available_location(hashtag=None, wanted_results=10):
@@ -12,8 +15,10 @@ def get_recent_tweets_with_available_location(hashtag=None, wanted_results=10):
     next_token = None
     while len(tweets_with_available_location) < wanted_results and number_of_requests < MAX_REQUESTS:
         response = twitter.send_request(next_token)
-        data = response["data"]
         meta = response["meta"]
+        if meta["result_count"] == 0:
+            break
+        data = response["data"]
         for tweet in data:
             if tweet.get("geo") is not None and len(tweets_with_available_location) < wanted_results:
                 tweets_with_available_location.append(tweet)
@@ -25,8 +30,21 @@ def get_recent_tweets_with_available_location(hashtag=None, wanted_results=10):
         else:
             break
     if len(tweets_with_available_location) == 0:
-        return get_recent_tweets_with_available_location(escape_hashtag_sign('#oops'))
+        return get_message_tweet(no_results=True)
     return extract_coordinates_from_tweets_info(tweets_with_available_location, places)
+
+
+def get_message_tweet(hello=False, no_results=False, wrong_inputs=False):
+    if no_results is True and hello is False and wrong_inputs is False:
+        response = get_tweet_by_id(NO_RESULTS_TWEET_ID)
+    elif wrong_inputs is True and hello is False:
+        response = get_tweet_by_id(WRONG_INPUTS_TWEET_ID)
+    else:
+        response = get_tweet_by_id(HELLO_TWEET_ID)
+    data = response["data"]
+    tweet = [data[0]]
+    place = response["includes"]["places"]
+    return extract_coordinates_from_tweets_info(tweet, place)
 
 
 def calculate_coordinates(place):

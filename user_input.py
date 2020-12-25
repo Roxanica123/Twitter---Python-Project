@@ -22,6 +22,7 @@ def check_wanted_results_validity(wanted_results):
 
 
 def assure_hashtag_sign_existence(hashtag):
+    print(hashtag)
     return hashtag if (hashtag is None or (len(hashtag) > 0 and hashtag[0] == '#')) else '#' + hashtag
 
 

@@ -3,10 +3,10 @@ import requests
 from twitter_credentials import bearer_token_v2
 
 QUERY = "query="
-TWEET_FIELDS = "tweet.fields="
+TWEET_FIELDS = "tweet.fields=geo"
 NEXT_TOKEN = "next_token="
-EXPANSIONS = "expansions="
-PLACE_FIELDS = "place.fields="
+EXPANSIONS = "expansions=geo.place_id"
+PLACE_FIELDS = "place.fields=geo,contained_within"
 MAX_RESULTS = "max_results="
 
 
@@ -14,6 +14,12 @@ def twitter_embed_request(tweet_id):
     tweet_url = "https://twitter.com/random/status/" + str(tweet_id)
     url = "https://publish.twitter.com/oembed?theme=dark&url=" + tweet_url
     response = requests.request("GET", url)
+    return response.json()
+
+
+def get_tweet_by_id(tweet_id):
+    url = "https://api.twitter.com/2/tweets?ids={}&{}&{}&{}".format(tweet_id, TWEET_FIELDS, EXPANSIONS, PLACE_FIELDS)
+    response = requests.request("GET", url, headers=TwitterRequest.build_headers())
     return response.json()
 
 
@@ -25,12 +31,9 @@ class TwitterRequest:
 
     def build_url(self, next_token=None):
         query = QUERY + (self.hashtag if self.hashtag is not None else 'hello')
-        tweet_fields = TWEET_FIELDS + "geo"
-        expansions = EXPANSIONS + "geo.place_id"
-        place_fields = PLACE_FIELDS + "geo,contained_within"
         max_results = MAX_RESULTS + str(self.max_results)
         url = "https://api.twitter.com/2/tweets/search/recent?{}&{}&{}&{}&{}".format(
-            query, tweet_fields, expansions, place_fields, max_results
+            query, TWEET_FIELDS, EXPANSIONS, PLACE_FIELDS, max_results
         )
         if next_token is not None:
             url = url + "&{}".format(NEXT_TOKEN + next_token)
