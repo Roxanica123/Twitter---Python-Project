@@ -58,6 +58,7 @@ def find_tweet_place_in_places_list(tweet, places):
 
 
 def extract_coordinates_from_tweets_info(tweets, places):
+    existent = 1
     tweets_with_extracted_location = []
     for tweet in tweets:
         if tweet["geo"].get("coordinates") is not None:
@@ -65,6 +66,10 @@ def extract_coordinates_from_tweets_info(tweets, places):
         else:
             place = find_tweet_place_in_places_list(tweet, places)
             coordinates = calculate_coordinates(place)
+
+        if next((x for x in tweets_with_extracted_location if x["coordinates"] == coordinates), None) is not None:
+            coordinates = [x + 0.00005 * existent for x in coordinates]
+            existent += 1
         tweet_with_extracted_location = {"id": tweet["id"], "text": tweet["text"], "coordinates": coordinates}
         tweets_with_extracted_location.append(tweet_with_extracted_location)
     return tweets_with_extracted_location
