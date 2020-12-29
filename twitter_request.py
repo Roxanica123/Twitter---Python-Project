@@ -19,6 +19,8 @@ def twitter_embed_request(tweet_id):
     tweet_url = "https://twitter.com/random/status/" + str(tweet_id)
     url = "https://publish.twitter.com/oembed?theme=dark&url=" + tweet_url
     response = requests.request("GET", url)
+    if response.status_code != 200:
+        raise Exception(response.status_code, response.text)
     return response.json()
 
 
@@ -30,6 +32,8 @@ def get_tweet_by_id(tweet_id):
     """
     url = "https://api.twitter.com/2/tweets?ids={}&{}&{}&{}".format(tweet_id, TWEET_FIELDS, EXPANSIONS, PLACE_FIELDS)
     response = requests.request("GET", url, headers=TwitterRequest.build_headers())
+    if response.status_code != 200:
+        raise Exception(response.status_code, response.text)
     return response.json()
 
 
