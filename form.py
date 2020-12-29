@@ -25,5 +25,7 @@ def add_form_to_map(map_string_representation):
 
     link_tag = soup.new_tag("link", rel="stylesheet", href="/static/form.css")
     soup.head.append(link_tag)
+    soup.head.append(form_soup.link)
+    soup.head.append(form_soup.title)
     soup.body.append(form_soup)
     return str(soup)
