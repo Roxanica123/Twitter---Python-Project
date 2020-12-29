@@ -13,6 +13,10 @@ app.config['SECRET_KEY'] = 'random-secret-key'
 
 @app.route('/', methods=['GET', 'POST'])
 def get_hashtag():
+    """
+    A function that receives a request and returns the map html representation for that request
+    :return: a string representing the html representation of the map for the given request
+    """
     form = HashtagForm()
     if form.validate_on_submit():
         return redirect('?hashtag={}&wanted_results={}'.format(form.hashtag.data, form.wanted_results.data))
