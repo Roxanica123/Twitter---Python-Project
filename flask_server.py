@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 from flask import request, render_template_string
 
 from data_preparation import get_recent_tweets_with_available_location, get_message_tweet
@@ -24,9 +24,15 @@ def get_hashtag():
     wanted_results = request.args.get('wanted_results')
 
     if hashtag is not None and check_hashtag_validity(hashtag) and check_wanted_results_validity(wanted_results):
-        results = get_recent_tweets_with_available_location(escape_hashtag_sign(hashtag), int(wanted_results))
+        try:
+            results = get_recent_tweets_with_available_location(escape_hashtag_sign(hashtag), int(wanted_results))
+        except:
+            return render_template_string(open("./static/error.html").read())
     else:
-        results = get_message_tweet(hello=True) if len(request.args) == 0 else get_message_tweet(wrong_inputs=True)
+        try:
+            results = get_message_tweet(hello=True) if len(request.args) == 0 else get_message_tweet(wrong_inputs=True)
+        except:
+            return render_template_string(open("./static/error.html").read())
     my_map = Map(results)
     map_string_representation = my_map.get_html_string_representation()
     map_string_representation = add_form_to_map(map_string_representation)
